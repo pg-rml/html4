@@ -8,7 +8,12 @@
 	function LoveChange(love){
 		let LoveGauge = document.getElementById("LoveGauge");
 		//LoveGauge.love = LoveGauge.love - 1; 
-		LoveGauge.love = "똥"; 
+		 
+		if(LoveGauge.love == "똥"){
+			LoveGauge.love = "으!"
+		}
+
+		else LoveGauge.love = "똥";
 		LoveGauge.innerHTML = LoveGauge.love;
 	}
 </script>
@@ -36,7 +41,7 @@
 		display: inline-block;
 	}	 
 	.b3{
-		margin: 50px;
+		margin: 0px;
 		width: 1000px;
 		height: 130px;
 		display: inline-block;
@@ -48,13 +53,13 @@
 <div> 
 	<h2>햄서터와 외교를 해요</h2>
 	<div class="b2"> <img alt = "HTML" src="https://data2.1freewallpapers.com/detail/hamster-rodent-feathers.jpg" width= "300" height="250"> </div>
-	<p id = "LoveGauge" onclick="LoveChange(love)"> 
+	<p id = "LoveGauge"> 
 	<script type="text/javascript">
 		let love = 5;
 		document.write(love);
 	</script> </p>
 	<div class="b3"></div>
-
+	<p onclick="LoveChange(love)"> <img alt = "HTML" src="https://w7.pngwing.com/pngs/702/302/png-transparent-red-button-push-button-red-button-miscellaneous-3d-computer-graphics-web-button.png" width= "200" height="150"> </p>
 </div>
 </body>
 </html>
