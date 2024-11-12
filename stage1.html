@@ -13,12 +13,32 @@
 	var button = new Image();
 	button.src = "./button.png";
 
+	var dot = new Image();
+	dot.src = "./dot.png";
+
+	var line = new Image();
+	line.src = "./line.png";
+
 	var keycode;
 	var push = 0; 
 
 	var stage1 = [0, 0, 0, 1, 1, 1, 0, 0, 0];
 	var index = 0; 
 
+	var onScreen = [];
+
+	class Morse {
+
+		constructor(type){
+
+			type = new Image();
+			if(type == 0) this.type.src = "./dot.png";
+			else if(type == 1) this.type.src = "./line.png";
+
+			x = 1000;
+		}
+
+	}
 	// 페이지 시작 시 발동되는 함수 
 	function loaded(){
 
@@ -31,7 +51,7 @@
 
 		// 무한하게 runGame을 돌릴것임
 		setInterval(runGame, 10);
-		setInterval(runGame, 3000);
+		setInterval(printMorse, 1000);
 	} 
 
 	// 무한히 모든 것을 그림 
@@ -41,6 +61,8 @@
 
 	function printMorse() {
 		
+		onScreen.push(new Morse(stage1[index]));
+		index = index + 1;
 	}
 
 	// 그림
@@ -48,6 +70,13 @@
 		context.drawImage(partner, 540, 50, 200, 250);
 		if(push == 0) context.drawImage(button, 540, 500, 200, 180);
 		else if(push == 1) context.drawImage(button, 540, 530, 200, 150);
+
+		
+		/*
+		for(let i = 0; i < onScreen.length; i++){
+			drawImage(onScreen[i].type, onScreen[i].x, 350, 100, 100);
+			x = x - 1;
+		}*/
 	}
 
 	function keydown(){
