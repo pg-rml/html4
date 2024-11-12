@@ -5,31 +5,62 @@
 <title>흐트므르IV</title>
 <script type="text/javascript">
 
+	// 김철수 씨 
 	var partner = new Image();
 	partner.src = "./kim.png";
 
+	// 빨간 버튼 
 	var button = new Image();
 	button.src = "./button.png";
 
+	var keycode;
+	var push = 0; 
+
+	var stage1 = [0, 0, 0, 1, 1, 1, 0, 0, 0];
+
+	// 페이지 시작 시 발동되는 함수 
 	function loaded(){
 
+		// 태그 가져옴 
 		canvas = document.getElementById('c1');
 		context = canvas.getContext('2d');
 
 		runGame();
 
-		setInterval(runGame, 10);
-	}
 
+		// 무한하게 runGame을 돌릴것임
+		setInterval(runGame, 10);
+	} 
+
+	// 무한히 모든 것을 그림 
 	function runGame() {
 		drawAll();
 	}
 
+	//function 
+
+	// 그림
 	function drawAll(){
 		context.drawImage(partner, 540, 50, 200, 250);
-		context.drawImage(button, 540, 500, 200, 180);
+		if(push == 0) context.drawImage(button, 540, 500, 200, 180);
+		else if(push == 1) context.drawImage(button, 540, 530, 200, 150);
 	}
-   	</script>
+
+	function keydown(){
+        //눌러진 key의 코드값
+        keycode = event.keyCode;
+        switch(keycode){
+            case 32: push = 1; break;
+        }
+    }
+
+    function keyup(){
+    	keycode = event.keyCode;
+        switch(keycode){
+            case 32: push = 0; break;
+        }
+    }
+</script>
 </head>
 <body onload="loaded()" onkeydown="keydown()" onkeyup="keyup()">
     <canvas width="1280" height="720" style="border: 2px solid black;" id="c1"></canvas>
