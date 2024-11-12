@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>흐트므르IV</title>
+<script type="text/javascript">
+
+	var partner = new Image();
+	partner.src = "./kim.png";
+
+	var button = new Image();
+	button.src = "./button.png";
+
+	function loaded(){
+
+		canvas = document.getElementById('c1');
+		context = canvas.getContext('2d');
+
+		runGame();
+
+		setInterval(runGame, 10);
+	}
+
+	function runGame() {
+		drawAll();
+	}
+
+	function drawAll(){
+		context.drawImage(partner, 540, 50, 200, 250);
+		context.drawImage(button, 540, 500, 200, 180);
+	}
+   	</script>
+</head>
+<body onload="loaded()" onkeydown="keydown()" onkeyup="keyup()">
+    <canvas width="1280" height="720" style="border: 2px solid black;" id="c1"></canvas>
+</body>
+</html>
