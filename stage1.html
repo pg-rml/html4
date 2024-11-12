@@ -17,6 +17,7 @@
 	var push = 0; 
 
 	var stage1 = [0, 0, 0, 1, 1, 1, 0, 0, 0];
+	var index = 0; 
 
 	// 페이지 시작 시 발동되는 함수 
 	function loaded(){
@@ -30,6 +31,7 @@
 
 		// 무한하게 runGame을 돌릴것임
 		setInterval(runGame, 10);
+		setInterval(runGame, 3000);
 	} 
 
 	// 무한히 모든 것을 그림 
@@ -37,7 +39,9 @@
 		drawAll();
 	}
 
-	//function 
+	function printMorse() {
+		
+	}
 
 	// 그림
 	function drawAll(){
