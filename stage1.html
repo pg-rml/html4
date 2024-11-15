@@ -7,17 +7,17 @@
 
 	// 김철수 씨 
 	var partner = new Image();
-	partner.src = "./kim.png";
+	partner.src = "./image/kim.png";
 
 	// 빨간 버튼 
 	var button = new Image();
-	button.src = "./button.png";
+	button.src = "./image/button.png";
 
 	var dot = new Image();
-	dot.src = "./dot.png";
+	dot.src = "./image/dot.png";
 
 	var line = new Image();
-	line.src = "./line.png";
+	line.src = "./image/line.png";
 
 	var keycode;
 	var push = 0; 
@@ -31,11 +31,13 @@
 
 		constructor(type){
 
-			type = new Image();
-			if(type == 0) this.type.src = "./dot.png";
-			else if(type == 1) this.type.src = "./line.png";
+			this.type = type;
+			this.image = new Image();
+			this.x = 1000;
 
-			x = 1000;
+			if(type == 0) this.image.src = "./image/dot.png";
+			else if(type == 1) this.image.src = "./image/line.png";
+
 		}
 
 	}
@@ -71,12 +73,10 @@
 		if(push == 0) context.drawImage(button, 540, 500, 200, 180);
 		else if(push == 1) context.drawImage(button, 540, 530, 200, 150);
 
-		
-		/*
 		for(let i = 0; i < onScreen.length; i++){
-			drawImage(onScreen[i].type, onScreen[i].x, 350, 100, 100);
-			x = x - 1;
-		}*/
+			context.drawImage(onScreen[i].image, onScreen[i].x, 350, 100, 100);
+			onScreen[i].x = onScreen[i].x - 1;
+		}
 	}
 
 	function keydown(){
