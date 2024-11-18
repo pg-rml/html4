@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>흐트므르IV</title>
+<script type="text/javascript">
+
+	let stage1 = [0, 0, 0, 1, 1, 1, 0, 0, 0];
+
+	function LoveChange(love){
+		let LoveGauge = document.getElementById("LoveGauge");
+		 
+		if(LoveGauge.love == "똥"){
+			LoveGauge.love = "으!"
+		}
+
+		else LoveGauge.love = "똥";
+
+		LoveGauge.innerHTML = LoveGauge.love;
+	}
+
+	//모스부호 재생
+	function PlayMorse(){
+		let MorseSound = document.getElementById("MorseSound");
+		MorseSound.play();
+	}
+
+	function Timer(time){
+		let Verdict = document.getElementById("Verdict");
+		setInterval(() => {Verdict.time ++;}, 10); //0.01초 마다 time++
+	}
+
+
+	//판정
+	function PrintVerdict(result){
+		let Verdict = document.getElementById("Verdict");
+
+		if(play == 0) //게임 중이 아닐 때
+		{
+			play = 1;
+			Verdict.result = "Start";
+			Verdict.innerHTML = Verdict.result;
+
+			setTimeout(PlayMorse, 3000); //3초 뒤 모스부호 재생
+			Verdict.time = 0;
+			Timer(Verdict.time);
+		}
+				
+		else //게임 중
+		{
+			if(300 <= Verdict.time && Verdict.time <= 400) //모스부호 재생 후 1초까지 perfect
+			{
+				Verdict.result = "Perfect";
+			}
+
+			else 
+			{
+				Verdict.result = "Miss";
+			}
+
+			Verdict.innerHTML = Verdict.result;
+		
+		}
+	}
+
+
+	function PrintMorse(stage){
+		eval(str);
+	}
+
+</script>
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+
+	}
+	div{	
+		background-color: skyblue;
+		width: 1280px;
+		height: 720px;
+		text-align: center;
+	}
+	.b1{
+
+	}
+	.b2{
+		margin: 30px;
+		width: 300px;
+		height: 250px;
+
+		display: inline-block;
+	}	 
+	.b3{
+		border: 3px solid #000;
+		margin: 0px;
+		width: 1000px;
+		height: 130px;
+		display: inline-block;
+	}
+
+</style>
+</head>
+<body>
+<h1> 모스은 말이야?! </h1?>
+<div> 
+	<h3>stage 1</h3>
+	
+	<div class="b2"> 
+		<img alt = "HTML" src="kim.png" width= "200" height="250"> 
+
+	</div>
+
+	<p id = "LoveGauge"> 
+		<script type="text/javascript">
+			let love = 5;
+			document.write(love);
+		</script> 
+	</p>
+
+	<audio id="MorseSound">
+		<source src="hi.mp3"  type="audio/mpeg">
+	</audio>
+
+	<p id = "Verdict"> 
+		<script type="text/javascript">
+			let result = "asdf";
+			let play = 0;
+			let time = 0;
+			document.write(result);
+		</script> 
+	</p>
+
+	<div class="b3"></div>
+
+	<p onclick="LoveChange(love); PrintVerdict(result);"> 
+		<img alt = "HTML" src="https://w7.pngwing.com/pngs/702/302/png-transparent-red-button-push-button-red-button-miscellaneous-3d-computer-graphics-web-button.png" width= "200" height="150"> 
+	</p>
+
+
+</div>
+</body>
+</html>
