@@ -113,12 +113,14 @@
         keycode = event.keyCode;
 
         if(keycode == 32){
-        	if(onScreen.length != 0 && onScreen[0].x <= 120 && onScreen[0].x >=20){
+        	
+        	if(keyid == null) {
+
+        		if(onScreen.length != 0 && onScreen[0].x <= 120 && onScreen[0].x >=20){
         		trash = onScreen.shift();
         		judgelight = 1;
 	        	
-        	}
-        	if(keyid == null) {
+        		}
         		keyid = setTimeout(function(){push = 0;}, 100);
         		push = 1;
         	}
