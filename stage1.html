@@ -19,12 +19,27 @@
 	var line = new Image();
 	line.src = "./image/line.png";
 
+	var judgeline = new Image();
+	judgeline.src = "./image/judgeline.png";
+
+	var red = new Image();
+	red.src = "./image/red.png";
+
+	var green = new Image();
+	green.src = "./image/green.png";
+
+	var white = new Image();
+	white.src = "./image/white.png";
+
 	var keycode;
 	var push = 0; 
 
+	var keyid = null;
+	var keyevent = 0;
+
 	var stage1 = [0, 0, 0, 1, 1, 1, 0, 0, 0];
 	var index = 0; 
-
+	var judgelight = -1; 
 	var onScreen = [];
 
 	class Morse {
@@ -70,29 +85,61 @@
 	// 그림
 	function drawAll(){
 		context.drawImage(partner, 540, 50, 200, 250);
+		
 		if(push == 0) context.drawImage(button, 540, 500, 200, 180);
 		else if(push == 1) context.drawImage(button, 540, 530, 200, 150);
 
 		for(let i = 0; i < onScreen.length; i++){
 			context.drawImage(onScreen[i].image, onScreen[i].x, 350, 100, 100);
-			onScreen[i].x = onScreen[i].x - 1;
+			onScreen[i].x = onScreen[i].x - 6;
 		}
+
+		if(onScreen.length != 0 && onScreen[0].x < 20) {
+			
+			trash = onScreen.shift();
+			judgelight = 0; 
+			
+
+		}
+
+		if(judgelight == 0) context.drawImage(red, 130, 300, 50, 30);
+		else if(judgelight == 1) context.drawImage(green, 130, 300, 50, 30);
+		
+		context.drawImage(judgeline, 150, 350, 10, 100);
 	}
 
 	function keydown(){
         //눌러진 key의 코드값
         keycode = event.keyCode;
-        switch(keycode){
-            case 32: push = 1; break;
+
+        if(keycode == 32){
+        	if(onScreen.length != 0 && onScreen[0].x <= 120 && onScreen[0].x >=20){
+        		trash = onScreen.shift();
+        		judgelight = 1;
+	        	
+        	}
+        	if(keyid == null) {
+        		keyid = setTimeout(function(){push = 0;}, 100);
+        		push = 1;
+        	}
+       		return;
         }
+        
     }
 
     function keyup(){
     	keycode = event.keyCode;
         switch(keycode){
-            case 32: push = 0; break;
+            case 32: 
+            	clearTimeout(keyid);
+            	keyid = null;
+            	push = 0; 
+            	break;
         }
     }
+
+
+
 </script>
 </head>
 <body onload="loaded()" onkeydown="keydown()" onkeyup="keyup()">
