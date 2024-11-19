@@ -13,26 +13,31 @@
 
 	}
 	div{
-		background-color: skyblue;
-		border: 3px solid #000;
 		width: 1280px;
 		height: 720px;
 		text-align: center;
 	}
-	.b1{
-		width: 300px ;
-		height: 300px;
-		text-align: center;
+	.background{
+		background-image: url('./image/mainBackground.png');
+		background-repeat: no-repeat;
+		background-size: contain;
+		position:relative;
+	}
+	.astronaut{
+		width:350px;
+		height:350px;
+		position:absolute;
+		top:50%;
+		left:50%;
+		transform:translate(-50%, 2.7%);
 	}
 
 </style>
 </head>
 <body>
-<h1> 모스은 말이야?! </h1?>
-<div> 
-	<h2>햄서터와 외교를 해요</h2>
+<div class="background"> 
 	<a href = "stage.html">
-		<div class="b1"> <img alt = "HTML" src="off.jpg" onmouseover="this.src = 'on.jpg'" onmouseout = "this.src = 'off.jpg'" width = "300" height = "300"> </div>
+		<div class="astronaut"> <img alt = "HTML" src="./image/stand_s.png" onmouseover="this.src = './image/yeah_s.png'" onmouseout = "this.src = 'stand_s.png'" width = "350" height = "350"> </div>
 	</a>
 </div>
 </body>
