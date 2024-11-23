@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>흐트므르IV</title>
+<script type="text/javascript">
+
+    // 김철수 씨
+    var partner = new Image();
+    partner.src = "./image/kim.png";
+
+    // 빨간 버튼
+    var button = new Image();
+    button.src = "./image/button.png";
+
+    var dot = new Image();
+    dot.src = "./image/dot.png";
+
+    var line = new Image();
+    line.src = "./image/line.png";
+
+    var judgeline = new Image();
+    judgeline.src = "./image/judgeline.png";
+
+    var red = new Image();
+    red.src = "./image/red.png";
+
+    var green = new Image();
+    green.src = "./image/green.png";
+
+    var white = new Image();
+    white.src = "./image/white.png";
+
+    var keycode;
+    var push = 0; 
+
+    var keyid = null;
+    var keyevent = 0;
+
+    var stage1 = [0, 0, 0, 1, 1, 1, 0, 0, 0];
+    var index = 0; 
+    var judgelight = -1; 
+    var onScreen = [];
+    var heart = 3; // 기본 체력
+    var gameRunning = true; // 게임이 돌아가고 있는지
+
+    class Morse {
+        constructor(type){
+            this.type = type;
+            this.image = new Image();
+            this.x = 1000;
+
+            if(type == 0) this.image.src = "./image/dot.png";
+            else if(type == 1) this.image.src = "./image/line.png";
+        }
+    }
+    // 페이지 시작 시 발동되는 함수
+    function loaded(){
+
+        // 태그 가져옴
+        canvas = document.getElementById('c1');
+        context = canvas.getContext('2d');
+
+        runGame();
+
+
+        // 무한하게 runGame을 돌릴것임
+        setInterval(runGame, 10);
+        setInterval(printMorse, 1000);
+    }
+
+    // 무한히 모든 것을 그림
+    function runGame() {
+        if (gameRunning) {
+            drawAll();
+        }
+    }
+
+    function printMorse() {
+        onScreen.push(new Morse(stage1[index]));
+        index = index + 1;
+    }
+
+    // 그림
+    function drawAll(){
+        context.clearRect(0, 0, canvas.width, canvas.height); // 초기화
+        context.drawImage(partner, 540, 50, 200, 250);
+        
+        if(push == 0) context.drawImage(button, 540, 500, 200, 180);
+        else if(push == 1) context.drawImage(button, 540, 530, 200, 150);
+
+        for(let i = 0; i < onScreen.length; i++){
+            context.drawImage(onScreen[i].image, onScreen[i].x, 350, 100, 100);
+            onScreen[i].x = onScreen[i].x - 6;
+        }
+
+        if(onScreen.length != 0 && onScreen[0].x < 20) {
+            trash = onScreen.shift();
+            judgelight = 0; 
+            heart--; // 체력 감소
+            if (heart <= 0) {
+                heart = 0;
+                gameRunning = false; // 게임 정지
+            }
+        }
+
+        if(judgelight == 0) context.drawImage(red, 130, 300, 50, 30);
+        else if(judgelight == 1) context.drawImage(green, 130, 300, 50, 30);
+        
+        context.drawImage(judgeline, 150, 350, 10, 100);
+
+        // 체력 표시
+        context.font = "30px Arial";
+        context.fillStyle = "black";
+        context.fillText("Heart: " + heart, 1000, 50);
+        // 게임 오버 표시
+        if (!gameRunning) {
+            context.font = "60px Arial";
+            context.fillStyle = "red";
+            context.fillText("GAME OVER", 440, 360);
+        }
+
+    }
+
+    function keydown(){
+        // 눌러진 key의 코드값
+        keycode = event.keyCode;
+
+        if(keycode == 32){
+            if(keyid == null) {
+                if(onScreen.length != 0 && onScreen[0].x <= 120 && onScreen[0].x >=20){
+                    trash = onScreen.shift();
+                    judgelight = 1;
+                }
+                keyid = setTimeout(function(){push = 0;}, 100);
+                push = 1;
+            }
+            return;
+        }
+    }
+
+    function keyup(){
+        keycode = event.keyCode;
+        switch(keycode){
+            case 32: 
+                clearTimeout(keyid);
+                keyid = null;
+                push = 0; 
+                break;
+        }
+    }
+
+</script>
+</head>
+<body onload="loaded()" onkeydown="keydown()" onkeyup="keyup()">
+    <canvas width="1280" height="720" style="border: 2px solid black;" id="c1"></canvas>
+</body>
+</html>
