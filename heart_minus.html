@@ -7,11 +7,20 @@
 
     // 김철수 씨
     var partner = new Image();
-    partner.src = "./image/kim.png";
+    partner.src = "./image/partner_standing/kim_neutral.png";
 
-    // 빨간 버튼
-    var button = new Image();
-    button.src = "./image/button.png";
+    var black = new Image();
+    black.src = "./image/stage_bg/black.png";
+
+    var background = new Image();
+    background.src = "./image/stage_bg/stage1.png";
+
+    // 버튼
+    var button_on = new Image();
+    button_on.src = "./image/button/button_on.png";
+
+    var button_off = new Image();
+    button_off.src = "./image/button/button_off.png";
 
     var dot = new Image();
     dot.src = "./image/dot.png";
@@ -84,17 +93,21 @@
     // 그림
     function drawAll(){
         context.clearRect(0, 0, canvas.width, canvas.height); // 초기화
-        context.drawImage(partner, 540, 50, 200, 250);
+        context.drawImage(black, 0, 0, 1280, 720);
         
-        if(push == 0) context.drawImage(button, 540, 500, 200, 180);
-        else if(push == 1) context.drawImage(button, 540, 530, 200, 150);
 
         for(let i = 0; i < onScreen.length; i++){
-            context.drawImage(onScreen[i].image, onScreen[i].x, 350, 100, 100);
+            context.drawImage(onScreen[i].image, onScreen[i].x, 400, 100, 100);
             onScreen[i].x = onScreen[i].x - 6;
         }
 
-        if(onScreen.length != 0 && onScreen[0].x < 20) {
+        context.drawImage(background, 0, 0, 1280, 720);
+        context.drawImage(partner, 350, 22, 560, 350);
+
+        if(push == 0) context.drawImage(button_off, 430, 450, 400, 300);
+        else if(push == 1) context.drawImage(button_on, 430, 450, 400, 300);
+
+        if(onScreen.length != 0 && onScreen[0].x < 140) {
             trash = onScreen.shift();
             judgelight = 0; 
             heart--; // 체력 감소
@@ -104,10 +117,10 @@
             }
         }
 
-        if(judgelight == 0) context.drawImage(red, 130, 300, 50, 30);
-        else if(judgelight == 1) context.drawImage(green, 130, 300, 50, 30);
+        if(judgelight == 0) context.drawImage(red, 270, 300, 50, 30);
+        else if(judgelight == 1) context.drawImage(green, 270, 300, 50, 30);
         
-        context.drawImage(judgeline, 150, 350, 10, 100);
+        //context.drawImage(judgeline, 290, 400, 10, 100);
 
         // 체력 표시
         context.font = "30px Arial";
@@ -128,7 +141,7 @@
 
         if(keycode == 32){
             if(keyid == null) {
-                if(onScreen.length != 0 && onScreen[0].x <= 120 && onScreen[0].x >=20){
+                if(onScreen.length != 0 && onScreen[0].x <= 260 && onScreen[0].x >=140){
                     trash = onScreen.shift();
                     judgelight = 1;
                 }
