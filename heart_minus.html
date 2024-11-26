@@ -46,12 +46,37 @@
     var keyid = null;
     var keyevent = 0;
 
-    var stage1 = [0, 0, 0, 1, 1, 1, 0, 0, 0];
+    var playerTurn = 0;
+    var partnerTurn = 1;
+
+    var textBalloon = new Image();
+    textBalloon.src = "./image/TB_test.png";
+
+    var stage1 = [
+        [0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0],
+        [1, 0, 1, 1, 0, 0, 0, 0],
+        [1, 1, 1, 1, 0, 1],
+        [0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0],
+        [1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1],
+        [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+        [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0]
+        ];
+
+    //stage1[0][0] = [0, 0, 0, 1, 1, 1, 0, 0, 0];
+    var step = 0;
     var index = 0; 
     var judgelight = -1; 
     var onScreen = [];
     var heart = 3; // 기본 체력
     var gameRunning = true; // 게임이 돌아가고 있는지
+
+    //setInterval 키 얻기용
+    var runGameKey;
+    var printMorseKey = null;
+    var timeoutKey;
 
     class Morse {
         constructor(type){
@@ -72,10 +97,9 @@
 
         runGame();
 
-
         // 무한하게 runGame을 돌릴것임
-        setInterval(runGame, 10);
-        setInterval(printMorse, 1000);
+        runGameKey = setInterval(runGame, 10);
+        printMorseKey = setInterval(printMorse, 1000);
     }
 
     // 무한히 모든 것을 그림
@@ -86,7 +110,7 @@
     }
 
     function printMorse() {
-        onScreen.push(new Morse(stage1[index]));
+        onScreen.push(new Morse(stage1[step][index]));
         index = index + 1;
     }
 
@@ -96,17 +120,32 @@
         context.drawImage(black, 0, 0, 1280, 720);
         
 
+        //if(playerTurn == 1){
         for(let i = 0; i < onScreen.length; i++){
             context.drawImage(onScreen[i].image, onScreen[i].x, 400, 100, 100);
             onScreen[i].x = onScreen[i].x - 6;
         }
+        //}
+        
 
         context.drawImage(background, 0, 0, 1280, 720);
         context.drawImage(partner, 350, 22, 560, 350);
+        /*
+        if(partnerTurn == 1) {
+            context.drawImage(textBalloon, 250, 22, 200, 200);
+            if(printMorseKey != null) clearTimeout(printMorseKey);
+            setTimeout(()=>{
+                partnerTurn = 0; 
+                playerTurn = 1; 
+                step = step + 1; 
+                printMorseKey = setInterval(printMorse, 1000);
+            }, 1500)
+        }*/
 
         if(push == 0) context.drawImage(button_off, 430, 450, 400, 300);
         else if(push == 1) context.drawImage(button_on, 430, 450, 400, 300);
 
+        //if(playerTurn == 1){
         if(onScreen.length != 0 && onScreen[0].x < 140) {
             trash = onScreen.shift();
             judgelight = 0; 
@@ -114,8 +153,10 @@
             if (heart <= 0) {
                 heart = 0;
                 gameRunning = false; // 게임 정지
-            }
+                }
         }
+        //}
+        
 
         if(judgelight == 0) context.drawImage(red, 270, 300, 50, 30);
         else if(judgelight == 1) context.drawImage(green, 270, 300, 50, 30);
