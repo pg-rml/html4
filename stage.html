@@ -3,9 +3,6 @@
 <head>
 <meta charset="utf-8">
 <title>흐트므르IV</title>
-<script type="text/javascript">
-
-</script>
 <style>
 	*{
 		margin: 0;
@@ -23,29 +20,79 @@
 		background-size: contain;
 		position:relative;
 	}
-
+	.stage img{
+		width: 150px;
+		height: 150px;
+		cursor: pointer;
+	}
+	.locked img{
+		opacity: 0.5;
+		pointer-events: none;
+	}
 </style>
 </head>
 <body>
 <div class = "background"> 
-	<a href = "stage1.html">
-		<div style="position:absolute; width:150px; height:150px; transform: translate(100px, 180px);">
-		<img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/The_Blue_Marble_%28remastered%29.jpg/900px-The_Blue_Marble_%28remastered%29.jpg?20240707201246" width = "150" height = "150">
-		</div>
-	</a>
+	<div id ="stage1" class="stage" style="position:absolute; width:200px; height:200px; transform: translate(100px, 180px);">
+		<img alt = "Stage1" src = "./image/SD/kim.png" onclick="goStage(1)">
+	</div>
 
-	<div style="position:absolute; width:150px; height:150px; transform: translate(300px, 380px);">
-		<img alt = "HTML" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/The_Blue_Marble_%28remastered%29.jpg/900px-The_Blue_Marble_%28remastered%29.jpg?20240707201246" width = "150" height = "150">
+	<div id ="stage2" class="stage locked" style="position:absolute; width:200px; height:200px; transform: translate(250px, 380px);">
+		<img alt = "Stage2" src="./image/SD/earth.png" onclick="goStage(2)">
 	</div>
-	<div style="position:absolute; width:150px; height:150px; transform: translate(520px, 180px);">
-		<img alt = "HTML" src="https://i.namu.wiki/i/g4FbRRexW6hksbekpN16uQKOHYR-nC_EwXnLwRK7PbvPGfc9_qLT3BgqIi29v9qQSOwezc6Ws2eeMAv3eAtAGnBTxR1UI0MdDBU4rQnzwdmhOFNWXB0--q5PAlVQVChhZwXWkiam24C7K2oZhUP4bQ.webp" width = "150" height = "150">
+
+	<div id ="stage3" class="stage locked" style="position:absolute; width:200px; height:200px; transform: translate(500px, 180px);">
+		<img alt = "Stage3" src="./image/SD/mars.png" onclick="goStage(3)">
 	</div>
-	<div style="position:absolute; width:150px; height:150px; transform: translate(750px, 380px);">
-		<img alt = "HTML" src="http://spacetimes.co.kr/Files/141/Images/201907/625_1350_1451.jpg" width = "150" height = "150">
+
+	<div id ="stage4" class="stage locked" style="position:absolute; width:200px; height:200px; transform: translate(700px, 380px);">
+		<img alt = "Stage4" src="./image/SD/saturn_on.png" onclick="goStage(4)">
 	</div>
-	<div style="position:absolute; width:150px; height:150px; transform: translate(1000px, 180px);">
-		<img alt = "HTML" src="https://i.namu.wiki/i/jvvxo1VI62iPP2grj-SKMz-ku3KeTgU5MPiiwWubu7s0QWbhF-FC99QJ4ywcTn-fvNHQwY6fVw8jJ08tkdeIKQ.webp" width = "150" height = "150">
+
+	<div id ="stage5" class="stage locked" style="position:absolute; width:200px; height:200px; transform: translate(950px, 180px);">
+		<img alt = "Stage5" src="./image/SD/andro.png" onclick="goStage(5)">
+	</div>
+
+	<div id ="clear" style="position:absolute; width:300px; height:120px; transform: translate(980px, 600px);">
+		<img alt = "Stage clear" src="./image/button/clear.png">
 	</div>
 </div>
+
+<script type="text/javascript">
+	let currentStage = localStorage.getItem('currentStage') || 1;
+
+	function update() {
+		for(let i = 1; i <= 5; i++) {
+			const stage = document.getElementById("stage" + i);
+			if(i <= currentStage) {
+				stage.classList.remove("locked");
+			}
+			else {
+				stage.classList.add("locked");
+			}
+		}
+	}
+
+	function goStage(stageNum) {
+		if(stageNum <= currentStage) {
+			location.href = 'stage' + stageNum + '.html'; //스테이지 html 연동
+
+			if(stageNum == currentStage && currentStage < 5) {
+				currentStage++;
+				localStorage.setItem('currentStage', currentStage);
+				update();
+			}
+		}
+	}
+
+	document.getElementById("clear").addEventListener('click', () => {
+		currentStage = 1;
+		localStorage.setItem('currentStage', currentStage);
+		update();
+		alert("스테이지 정보가 초기화 되었습니다.");
+	} );
+
+	update();
+</script>
 </body>
 </html>
