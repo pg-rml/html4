@@ -102,7 +102,7 @@
 
     // 화면에 표시되는 모스부호 저장용 배열 
     var onScreen = [];
-    var heart = 3; // 기본 체력
+    var heart = 1000; // 기본 체력
     var gameRunning = true; // 게임이 돌아가고 있는지
 
     //setInterval 키 얻기용
@@ -110,6 +110,10 @@
     // 중복 실행 방지용 키
     var printMorseKey = null;
     var timeoutKey = null;
+
+    // 클리어 화면 출력용 변수 
+    var clear = 0;
+
 
     // 모스부호 객체 (타입/이미지 저장용)
     class Morse {
@@ -139,6 +143,16 @@
     // 무한히 모든 것을 그림
     function runGame() {
 
+        if(clear == 1){
+
+            partner.src = partner_happy.src;
+            context.drawImage(partner, 350, 22, 560, 350);
+            context.font = "60px Arial";
+            context.fillStyle = "green";
+            context.fillText("CLEAR", 440, 360);
+            gameRunning = false;
+        
+        }
         // 플레이어 턴인지 상대 턴인지 확인
         if(gameRunning){
                 if (partnerTurn == 1) {
@@ -211,7 +225,6 @@
             onScreen[i].x = onScreen[i].x - 6; // 여기 6 수정하면 모스부호 오는 속도 바꿀 수 있음 
         }
         
-
         context.drawImage(background, 0, 0, 1280, 720);
         context.drawImage(partner, 350, 22, 560, 350);
 
@@ -225,11 +238,21 @@
             judgelight = 0; 
             heart--; // 체력 감소
             partner.src = partner_bad.src;
+
             if(onScreen.length == 0){
-                playerTurn = 0;
-                partnerTurn = 1;
-                timeoutKey = null;
+
+                if(step == 9){
+                    playerTurn = 0;
+                    clear = 1;
+                }
+                else{
+                    playerTurn = 0;
+                    partnerTurn = 1;
+                    timeoutKey = null;
+                }
             }
+
+            
 
             if (heart <= 0) {
                 heart = 0;
@@ -247,7 +270,8 @@
         // 체력 표시
         context.font = "30px Arial";
         context.fillStyle = "black";
-        context.fillText("Heart: " + heart, 1000, 50);
+        context.fillText("Heart: " + heart, 1100, 60);
+
         // 게임 오버 표시
         if (!gameRunning) {
             context.drawImage(partner, 350, 22, 560, 350);
@@ -272,9 +296,16 @@
                     //console.log(onScreen.length);
                     judgelight = 1;
                     if(onScreen.length == 0){
-                        playerTurn = 0;
-                        partnerTurn = 1;
-                        timeoutKey = null;
+                        if(step == 9){
+                            playerTurn = 0;
+                            clear = 1;
+                        }
+
+                        else{
+                            playerTurn = 0;
+                            partnerTurn = 1;
+                            timeoutKey = null;
+                        }
                     }
                 }
                 keyid = setTimeout(function(){push = 0;}, 100);
