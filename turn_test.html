@@ -7,7 +7,17 @@
 
     // 김철수 씨
     var partner = new Image();
-    partner.src = "./image/partner_standing/kim_neutral.png";
+    //partner.src = "./image/partner_standing/kim_neutral.png";
+
+    var partner_neutral = new Image();
+    partner_neutral.src = "./image/partner_standing/kim_neutral.png";
+
+    var partner_bad = new Image();
+    partner_bad.src = "./image/partner_standing/kim_bad.png";
+
+    var partner_happy = new Image();
+    partner_happy.src = "./image/partner_standing/kim_happy.png";
+
 
     // 맨 뒷배경 
     var black = new Image();
@@ -155,6 +165,8 @@
     // 그림
     function runPartner(){
 
+        partner.src = partner_neutral.src;
+
         // 요소 출력 
         context.clearRect(0, 0, canvas.width, canvas.height); // 초기화
         context.drawImage(black, 0, 0, 1280, 720);
@@ -212,6 +224,7 @@
             trash = onScreen.shift();
             judgelight = 0; 
             heart--; // 체력 감소
+            partner.src = partner_bad.src;
             if(onScreen.length == 0){
                 playerTurn = 0;
                 partnerTurn = 1;
@@ -237,6 +250,7 @@
         context.fillText("Heart: " + heart, 1000, 50);
         // 게임 오버 표시
         if (!gameRunning) {
+            context.drawImage(partner, 350, 22, 560, 350);
             context.font = "60px Arial";
             context.fillStyle = "red";
             context.fillText("GAME OVER", 440, 360);
@@ -254,6 +268,7 @@
                 // 260보다 늘리고 140보다 줄이면 판정 널널해짐. 위쪽에 140이랑 여기랑 숫자 맞춰야 함. 
                 if(onScreen.length != 0 && onScreen[0].x <= 260 && onScreen[0].x >=140){
                     trash = onScreen.shift();
+                    partner.src = partner_happy.src;
                     //console.log(onScreen.length);
                     judgelight = 1;
                     if(onScreen.length == 0){
