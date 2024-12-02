@@ -365,6 +365,11 @@
         // 게임 오버 표시
         if (!gameRunning) {
             context.drawImage(partner, 350, 22, 560, 350);
+            var x = 1180;
+            for(let i = 0; i < 5; i++){
+                context.drawImage(heart_array[i], x, 30, 70, 70);
+                x = x - 60;
+            }
             context.font = "60px Arial";
             context.fillStyle = "red";
             context.fillText("GAME OVER", 440, 360);
