@@ -320,16 +320,19 @@
                     partner.src = partner_happy.src;
                     judgelight = 1;
                     if(onScreen.length == 0){
-                        if(step == 9){
-                            playerTurn = 0;
-                            clear = 1;
-                        }
+                        setTimeout(function(){
+                            if(step == 9){
+                                playerTurn = 0;
+                                clear = 1;
+                            }
 
-                        else{
-                            playerTurn = 0;
-                            partnerTurn = 1;
-                            timeoutKey = null;
-                        }
+                            else{
+                                playerTurn = 0;
+                                partnerTurn = 1;
+                                timeoutKey = null;
+                            }
+                        }, 500);
+
                     }
                 }
                 keyid = setTimeout(function(){push = 0;}, 100);
@@ -345,16 +348,18 @@
                     partner.src = partner_happy.src;
                     judgelight = 1;
                     if(onScreen.length == 0){
-                        if(step == 9){
-                            playerTurn = 0;
-                            clear = 1;
-                        }
+                        setTimeout(function(){
+                            if(step == 9){
+                                playerTurn = 0;
+                                clear = 1;
+                            }
 
-                        else{
-                            playerTurn = 0;
-                            partnerTurn = 1;
-                            timeoutKey = null;
-                        }
+                            else{
+                                playerTurn = 0;
+                                partnerTurn = 1;
+                                timeoutKey = null;
+                            }
+                        }, 500);
                     }
                 }
                 keyid = setTimeout(function(){push = 0;}, 100);
