@@ -72,40 +72,30 @@
     var playerTurn = 0;
     var partnerTurn = 1;
 
-    // 임시 말풍선 (깃허브에 이미지 푸시되어있지 않음)
-    var textBalloon = new Image();
-    textBalloon.src = "./image/TB_test.png";
-
+    // 상대 말풍선 
+    var tb_good = new Image();
+    tb_good.src = "./image/TB/good.png";
     var tb1 = new Image();
     tb1.src = "./image/TB/kim/001.png";
-
     var tb2 = new Image();
     tb2.src = "./image/TB/kim/002.png";
-
     var tb3 = new Image();
     tb3.src = "./image/TB/kim/003.png";
-    
     var tb4 = new Image();
     tb4.src = "./image/TB/kim/004.png";
-    
     var tb5 = new Image();
     tb5.src = "./image/TB/kim/005.png";
-    
     var tb6 = new Image();
     tb6.src = "./image/TB/kim/006.png";
-    
     var tb7 = new Image();
     tb7.src = "./image/TB/kim/007.png";
-    
     var tb8 = new Image();
     tb8.src = "./image/TB/kim/008.png";
-    
     var tb9 = new Image();
     tb9.src = "./image/TB/kim/009.png";
-    
     var tb10 = new Image();
     tb10.src = "./image/TB/kim/010.png";
-    
+
     var tb = [tb1, tb2, tb3, tb4, tb5, tb6, tb7, tb8, tb9, tb10];
     //배경음
     var bgm = new Audio();
@@ -133,8 +123,23 @@
         [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0]
         ];
 
-    //stage1[0][0] = [0, 0, 0, 1, 1, 1, 0, 0, 0];
     
+    var heart_on = new Image();
+    heart_on.src = "./image/heart/heart_on.png";
+    var heart_off = new Image();
+    heart_off.src = "./image/heart/heart_off.png";
+    var heart1 = new Image();
+    heart1.src = "./image/heart/heart_on.png";
+    var heart2 = new Image();
+    heart2.src = "./image/heart/heart_on.png";
+    var heart3 = new Image();
+    heart3.src = "./image/heart/heart_on.png";
+    var heart4 = new Image();
+    heart4.src = "./image/heart/heart_on.png";
+    var heart5 = new Image();
+    heart5.src = "./image/heart/heart_on.png";
+    var heart_array = [heart1, heart2, heart3, heart4, heart5];
+
     // 몇번째 대사인지 
     var step = -1;
     // 몇번째 모스부호인지 
@@ -145,7 +150,7 @@
 
     // 화면에 표시되는 모스부호 저장용 배열 
     var onScreen = [];
-    var heart = 1000; // 기본 체력
+    var heart = 5; // 기본 체력
     var gameRunning = true; // 게임이 돌아가고 있는지
 
     //setInterval 키 얻기용
@@ -157,6 +162,8 @@
     // 클리어 화면 출력용 변수 
     var clear = 0;
 
+    // 한 턴 끝나면 피 하나씩 회복되게 하려고 
+    var heal = 1;
 
     // 모스부호 객체 (타입/이미지 저장용)
     class Morse {
@@ -192,6 +199,7 @@
 
             partner.src = partner_happy.src;
             context.drawImage(partner, 350, 22, 560, 350);
+            context.drawImage(tb_good, 300, 22, 300, 300);
             context.font = "60px Arial";
             context.fillStyle = "green";
             context.fillText("CLEAR", 440, 360);
@@ -200,7 +208,7 @@
         }
         // 플레이어 턴인지 상대 턴인지 확인
         if(gameRunning){
-                if (partnerTurn == 1) {
+            if (partnerTurn == 1) {
                 console.log("partner");
                 runPartner();
             }
@@ -226,12 +234,27 @@
 
         partner.src = partner_neutral.src;
 
+        if(heart < 5 && heal == 1){
+
+            heart++;
+            heart_array[heart - 1] = heart_on;
+
+            heal = 0;
+        }
         // 요소 출력 
         context.clearRect(0, 0, canvas.width, canvas.height); // 초기화
         context.drawImage(black, 0, 0, 1280, 720);
 
         context.drawImage(background, 0, 0, 1280, 720);
         context.drawImage(partner, 350, 22, 560, 350);
+
+        var x = 1180;
+        for(let i = 0; i < 5; i++){
+
+            context.drawImage(heart_array[i], x, 30, 70, 70);
+            x = x - 60;
+        }
+        
 
         console.log("step");
         context.drawImage(tb[step + 1], 300, 22, 300, 300);
@@ -243,7 +266,7 @@
         // printMorse가 실행되고 있을 경우, 중지시킴 
         if(printMorseKey != null) clearInterval(printMorseKey);
 
-        // 1.5초 뒤에 턴 전환
+        // 2초 뒤에 턴 전환
         // 183번 줄 1500 수정하면 턴 전환 타이밍 바꿀 수 있음
         // 182번 줄 500 수정하면 모스부호 간격 바꿀 수 있음
         if(timeoutKey == null) {
@@ -253,8 +276,9 @@
                 step = step + 1; 
                 index = 0;
                 judgelight = -1;
+                heal = 1;
                 printMorseKey = setInterval(printMorse, 500);
-            }, 1500);
+            }, 2000);
         }
 
 
@@ -276,6 +300,13 @@
         context.drawImage(background, 0, 0, 1280, 720);
         context.drawImage(partner, 350, 22, 560, 350);
 
+        var x = 1180;
+        for(let i = 0; i < 5; i++){
+
+            context.drawImage(heart_array[i], x, 30, 70, 70);
+            x = x - 60;
+        }
+
         // 버튼 변환 
         if(push == 0) {
             context.drawImage(button_off, 430, 450, 400, 300);
@@ -295,6 +326,8 @@
             trash = onScreen.shift();
             judgelight = 0; 
             heart--; // 체력 감소
+            heart_array[heart] = heart_off;
+
             partner.src = partner_bad.src;
 
             if(onScreen.length == 0){
@@ -324,10 +357,11 @@
         //context.drawImage(judgeline, 290, 400, 10, 100);
 
         // 체력 표시
+        /*
         context.font = "30px Arial";
         context.fillStyle = "black";
         context.fillText("Heart: " + heart, 1100, 60);
-
+        */
         // 게임 오버 표시
         if (!gameRunning) {
             context.drawImage(partner, 350, 22, 560, 350);
