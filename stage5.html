@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>흐트므르IV</title>
+<script type="text/javascript">
+
+    // 김철수 씨
+    var partner = new Image();
+    //partner.src = "./image/partner_standing/kim_neutral.png";
+
+    var partner_neutral = new Image();
+    partner_neutral.src = "./image/partner_standing/andro_neutral.png";
+
+    var partner_bad = new Image();
+    partner_bad.src = "./image/partner_standing/andro_bad.png";
+
+    var partner_happy = new Image();
+    partner_happy.src = "./image/partner_standing/andro_happy.png";
+
+
+    // 맨 뒷배경 
+    var black = new Image();
+    black.src = "./image/stage_bg/black.png";
+
+    // 가운데 투명화 된 배경 
+    var background = new Image();
+    background.src = "./image/stage_bg/stage5.png";
+
+    // 버튼 (주인공) 눌렸을 때 / 평소
+    var button_on = new Image();
+    button_on.src = "./image/button/button_on.png";
+
+    var button_off = new Image();
+    button_off.src = "./image/button/button_off.png";
+
+    // 모스부호 점 / 선
+    var dot = new Image();
+    dot.src = "./image/dot.png";
+
+    var line = new Image();
+    line.src = "./image/line.png";
+
+    // 판정 라이트 틀림 / 맞음
+    var red = new Image();
+    red.src = "./image/red.png";
+    var green = new Image();
+    green.src = "./image/green.png";
+
+    // 클리어 화면에 사용하는 이미지 
+    var clear_image = new Image();
+    clear_image.src = "./image/clear.png"
+    var gameover_image = new Image();
+    gameover_image.src = "./image/over.png"
+
+    // 누른 키 종류 판별하는 함수 
+    var keycode;
+    // 눌렀는지 판별 
+    var push = 0; 
+
+    // 키다운 상태일 때 판정되지 않게 하려고 timeout을 이용함
+    // 해당 timeout이 중복으로 실행되지 않도록 검사하는 변수 
+    var keyid = null;
+    // 뭐임이거 안쓰는듯
+    var keyevent = 0;
+
+    // 플레이어 턴인지 파트너 턴인지 
+    // 1인 쪽이 활성화된 턴 
+    var playerTurn = 0;
+    var partnerTurn = 1;
+
+    // 상대 말풍선 
+    var tb_good = new Image();
+    tb_good.src = "./image/TB/good.png";
+    var tb1 = new Image();
+    tb1.src = "./image/TB/kim/001.png";
+    var tb2 = new Image();
+    tb2.src = "./image/TB/kim/002.png";
+    var tb3 = new Image();
+    tb3.src = "./image/TB/kim/003.png";
+    var tb4 = new Image();
+    tb4.src = "./image/TB/kim/004.png";
+    var tb5 = new Image();
+    tb5.src = "./image/TB/kim/005.png";
+    var tb6 = new Image();
+    tb6.src = "./image/TB/kim/006.png";
+    var tb7 = new Image();
+    tb7.src = "./image/TB/kim/007.png";
+    var tb8 = new Image();
+    tb8.src = "./image/TB/kim/008.png";
+    var tb9 = new Image();
+    tb9.src = "./image/TB/kim/009.png";
+    var tb10 = new Image();
+    tb10.src = "./image/TB/kim/010.png";
+
+    var tb = [tb1, tb2, tb3, tb4, tb5, tb6, tb7, tb8, tb9, tb10];
+    //배경음
+    var bgm = new Audio();
+    bgm.src = "./sound/bgm/andromeda.mp3";
+
+    //사운드
+    var dot = new Audio("./sound/morse/dot.mp3");
+    var dash = new Audio("./sound/morse/dash.mp3");
+    dot.volume = 0.5;   //소리 크기 조절
+    dash.volume = 0.5;  //기본값 1인 것 같은데 소리가 찢어지길래 줄여놓음;;
+
+    var tmp = 0;
+
+    // 주인공 대사 
+    var stage1 = [
+        [0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0],
+        [1, 0, 1, 1, 0, 0, 0, 0],
+        [1, 1, 1, 1, 0, 1],
+        [0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0],
+        [1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1],
+        [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+        [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0]
+        ];
+
+    
+    var heart_on = new Image();
+    heart_on.src = "./image/heart/heart_on.png";
+    var heart_off = new Image();
+    heart_off.src = "./image/heart/heart_off.png";
+    var heart1 = new Image();
+    heart1.src = "./image/heart/heart_on.png";
+    var heart2 = new Image();
+    heart2.src = "./image/heart/heart_on.png";
+    var heart3 = new Image();
+    heart3.src = "./image/heart/heart_on.png";
+    var heart4 = new Image();
+    heart4.src = "./image/heart/heart_on.png";
+    var heart5 = new Image();
+    heart5.src = "./image/heart/heart_on.png";
+    var heart_array = [heart1, heart2, heart3, heart4, heart5];
+
+    // 몇번째 대사인지 
+    var step = -1;
+    // 몇번째 모스부호인지 
+    var index = 0; 
+
+    // 판정 표시용 변수 (맞았는지 틀렸는지)
+    var judgelight = -1; 
+
+    // 화면에 표시되는 모스부호 저장용 배열 
+    var onScreen = [];
+    var heart = 5; // 기본 체력
+    var gameRunning = true; // 게임이 돌아가고 있는지
+
+    //setInterval 키 얻기용
+    var runGameKey;
+    // 중복 실행 방지용 키
+    var printMorseKey = null;
+    var timeoutKey = null;
+
+    // 클리어 화면 출력용 변수 
+    var clear = 0;
+
+    // 한 턴 끝나면 피 하나씩 회복되게 하려고 
+    var heal = 1;
+
+    // 모스부호 객체 (타입/이미지 저장용)
+    class Morse {
+        constructor(type){
+            this.type = type;
+            this.image = new Image();
+            this.x = 1000;
+
+            if(type == 0)
+                this.image.src = "./image/dot.png";
+            else if(type == 1)
+                this.image.src = "./image/line.png";
+        }
+    }
+    // 페이지 시작 시 발동되는 함수
+    function loaded(){
+
+        // 태그 가져옴
+        canvas = document.getElementById('c1');
+        context = canvas.getContext('2d');
+
+        //runGame();
+
+        // 무한하게 runGame을 돌릴것임
+        runGameKey = setInterval(runGame, 10);
+        //printMorseKey = setInterval(printMorse, 1000);
+    }
+
+    // 무한히 모든 것을 그림
+    function runGame() {
+
+        if(clear == 1){
+
+            partner.src = partner_happy.src;
+            context.drawImage(black, 0, 0, 1280, 720);
+            context.drawImage(background, 0, 0, 1280, 720);
+            context.drawImage(partner, 350, 30, 560, 350);
+            context.drawImage(tb_good, 300, 22, 300, 300);
+            context.drawImage(clear_image, 0, 0, 1280, 720);
+            context.drawImage(button_on, 430, 450, 400, 300);
+
+            var x = 1180;
+
+            for(let i = 0; i < 5; i++){
+                context.drawImage(heart_array[i], x, 30, 70, 70);
+                x = x - 60;
+            }
+
+            setTimeout(function(){
+                location.href = 'ending_happy.html';
+            }, 2000);
+
+            gameRunning = false;
+        
+        }
+        // 플레이어 턴인지 상대 턴인지 확인
+        if(gameRunning){
+            if (partnerTurn == 1) {
+                console.log("partner");
+                runPartner();
+            }
+            else if (playerTurn == 1) {
+                console.log("player");
+                runPlayer();
+            //if(printMorseKey == null) printMorseKey = setInterval(printMorse, 500);
+            }
+        }
+        
+    }
+
+    // 화면에 출력될 모스부호를 가져옴 
+    function printMorse() {
+        if(index < stage1[step].length){
+            onScreen.push(new Morse(stage1[step][index]));
+            index = index + 1;
+        }
+    }
+
+    // 그림
+    function runPartner(){
+
+        partner.src = partner_neutral.src;
+
+        if(heart < 5 && heal == 1){
+
+            heart++;
+            heart_array[heart - 1] = heart_on;
+
+            heal = 0;
+        }
+        // 요소 출력 
+        context.clearRect(0, 0, canvas.width, canvas.height); // 초기화
+        context.drawImage(black, 0, 0, 1280, 720);
+        context.drawImage(background, 0, 0, 1280, 720);
+        context.drawImage(partner, 350, 30, 560, 350);
+
+        var x = 1180;
+        for(let i = 0; i < 5; i++){
+
+            context.drawImage(heart_array[i], x, 30, 70, 70);
+            x = x - 60;
+        }
+        
+
+        console.log("step");
+        context.drawImage(tb[step + 1], 300, 22, 300, 300);
+        context.drawImage(button_off, 430, 450, 400, 300);
+
+        bgm.play(); // 배경음
+
+        // printMorse가 실행되고 있을 경우, 중지시킴 
+        if(printMorseKey != null) clearInterval(printMorseKey);
+
+        // 2초 뒤에 턴 전환
+        // 183번 줄 1500 수정하면 턴 전환 타이밍 바꿀 수 있음
+        // 182번 줄 500 수정하면 모스부호 간격 바꿀 수 있음
+        if(timeoutKey == null) {
+            timeoutKey = setTimeout(()=>{
+                partnerTurn = 0; 
+                playerTurn = 1; 
+                step = step + 1; 
+                index = 0;
+                judgelight = -1;
+                heal = 1;
+                printMorseKey = setInterval(printMorse, 500);
+            }, 2000);
+        }
+
+
+
+    }
+
+    // 플레이어 턴 
+    function runPlayer(){
+
+        context.clearRect(0, 0, canvas.width, canvas.height); // 초기화
+        context.drawImage(black, 0, 0, 1280, 720);
+        
+        // 모스부호 출력 
+        for(let i = 0; i < onScreen.length; i++){
+            context.drawImage(onScreen[i].image, onScreen[i].x, 400, 100, 100);
+            onScreen[i].x = onScreen[i].x - 6; // 여기 6 수정하면 모스부호 오는 속도 바꿀 수 있음 
+        }
+        
+        context.drawImage(background, 0, 0, 1280, 720);
+        context.drawImage(partner, 350, 30, 560, 350);
+
+        var x = 1180;
+        for(let i = 0; i < 5; i++){
+
+            context.drawImage(heart_array[i], x, 30, 70, 70);
+            x = x - 60;
+        }
+
+        // 버튼 변환 
+        if(push == 0) {
+            context.drawImage(button_off, 430, 450, 400, 300);
+        }
+        else if(push == 1) {
+            context.drawImage(button_on, 430, 450, 400, 300);
+            
+            //버튼에 맞춰 소리 재생
+            if(keycode == 90)
+                dot.play();
+            else if(keycode == 88)
+                dash.play();
+        }
+
+        // 못 치고 넘어갔을 경우 판정. 140 숫자 줄이면 판정 널널해짐. 
+        if(onScreen.length != 0 && onScreen[0].x < 140) {
+            trash = onScreen.shift();
+            judgelight = 0; 
+            heart--; // 체력 감소
+            heart_array[heart] = heart_off;
+
+            partner.src = partner_bad.src;
+
+            if(onScreen.length == 0){
+
+                if(step == 9){
+                    playerTurn = 0;
+                    clear = 1;
+                }
+                else{
+                    playerTurn = 0;
+                    partnerTurn = 1;
+                    timeoutKey = null;
+                }
+            }
+
+            if (heart <= 0) {
+                heart = 0;
+                gameRunning = false; // 게임 정지
+
+                setTimeout(function(){
+                    location.href = 'ending_bad_boom.html';
+                }, 2000);
+            }
+            
+        }
+        
+
+        if(judgelight == 0) context.drawImage(red, 210, 270, 170, 170);
+        else if(judgelight == 1) context.drawImage(green, 210, 270, 170, 170);
+        
+        //context.drawImage(judgeline, 290, 400, 10, 100);
+
+        // 체력 표시
+        /*
+        context.font = "30px Arial";
+        context.fillStyle = "black";
+        context.fillText("Heart: " + heart, 1100, 60);
+        */
+        // 게임 오버 표시
+        if (!gameRunning) {
+            context.drawImage(black, 0, 0, 1280, 720);
+            context.drawImage(background, 0, 0, 1280, 720);
+            context.drawImage(partner, 350, 30, 560, 350);
+            var x = 1180;
+            for(let i = 0; i < 5; i++){
+                context.drawImage(heart_array[i], x, 30, 70, 70);
+                x = x - 60;
+            }
+            context.drawImage(gameover_image, 0, 0, 1280, 720);
+            context.drawImage(button_off, 430, 450, 400, 300);
+        }
+
+    }
+
+    function keydown(){
+        // 눌러진 key의 코드값
+        keycode = event.keyCode;
+
+        // z를 누를 경우
+        if(keycode == 90){
+            if(keyid == null) {
+                // 260보다 늘리고 140보다 줄이면 판정 널널해짐. 위쪽에 140이랑 여기랑 숫자 맞춰야 함. 
+                if(onScreen.length != 0 && onScreen[0].x <= 260 && onScreen[0].x >=140 && onScreen[0].type == 0){ 
+                    console.log(onScreen[0]);
+                    trash = onScreen.shift();
+                    partner.src = partner_happy.src;
+                    judgelight = 1;
+                    if(onScreen.length == 0){
+                        setTimeout(function(){
+                            if(step == 9){
+                                playerTurn = 0;
+                                clear = 1;
+                            }
+
+                            else{
+                                playerTurn = 0;
+                                partnerTurn = 1;
+                                timeoutKey = null;
+                            }
+                        }, 500);
+
+                    }
+                }
+                keyid = setTimeout(function(){push = 0;}, 100);
+                push = 1;
+            }
+            return;
+        }
+        // x를 누를 경우
+        else if(keycode == 88){
+            if(keyid == null) { //너무 힘들어서 판정 늘려놨음
+                if(onScreen.length != 0 && onScreen[0].x <= 400 && onScreen[0].x >=140 && onScreen[0].type == 1){ 
+                    trash = onScreen.shift();
+                    partner.src = partner_happy.src;
+                    judgelight = 1;
+                    if(onScreen.length == 0){
+                        setTimeout(function(){
+                            if(step == 9){
+                                playerTurn = 0;
+                                clear = 1;
+                            }
+
+                            else{
+                                playerTurn = 0;
+                                partnerTurn = 1;
+                                timeoutKey = null;
+                            }
+                        }, 500);
+                    }
+                }
+                keyid = setTimeout(function(){push = 0;}, 100);
+                push = 1;
+            }
+            return;
+        }
+    }
+
+    function keyup(){
+        keycode = event.keyCode;
+        switch(keycode){
+            case 90: 
+                clearTimeout(keyid);
+                keyid = null;
+                push = 0; 
+                break;
+            case 88: 
+                clearTimeout(keyid);
+                keyid = null;
+                push = 0; 
+                break;
+        }
+    }
+
+</script>
+</head>
+<body onload="loaded()" onkeydown="keydown()" onkeyup="keyup()">
+    <canvas width="1280" height="720" style="border: 2px solid black;" id="c1"></canvas>
+</body>
+</html>

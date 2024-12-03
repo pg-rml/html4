@@ -5,24 +5,6 @@
 <title>흐트므르IV</title>
 <script type="text/javascript">
 
-	let stage1 = [0, 0, 0, 1, 1, 1, 0, 0, 0];
-
-	function LoveChange(love){
-		let LoveGauge = document.getElementById("LoveGauge");
-		 
-		if(LoveGauge.love == "똥"){
-			LoveGauge.love = "으!"
-		}
-
-		else LoveGauge.love = "똥";
-
-		LoveGauge.innerHTML = LoveGauge.love;
-	}
-
-	function PrintMorse(stage){
-		
-	}
-
 </script>
 <style>
 	*{
@@ -31,43 +13,32 @@
 
 	}
 	div{
-		background-color: skyblue;
 		width: 1280px;
 		height: 720px;
 		text-align: center;
 	}
-	.b1{
-
+	.background{
+		background-image: url('./image/mainBackground.png');
+		background-repeat: no-repeat;
+		background-size: contain;
+		position:relative;
 	}
-	.b2{
-		margin: 30px;
-		width: 300px;
-		height: 250px;
-
-		display: inline-block;
-	}	 
-	.b3{
-		border: 3px solid #000;
-		margin: 0px;
-		width: 1000px;
-		height: 130px;
-		display: inline-block;
+	.astronaut{
+		width:350px;
+		height:350px;
+		position:absolute;
+		top:50%;
+		left:50%;
+		transform:translate(-50%, 2.7%);
 	}
+
 </style>
 </head>
 <body>
-<h1> 모스은 말이야?! </h1?>
-<div> 
-	<h3>stage 1</h3>
-	<div class="b2"> <img alt = "HTML" src="kim.png" width= "200" height="250"> </div>
-	<p id = "LoveGauge"> 
-		<script type="text/javascript">
-			let love = 5;
-			document.write(love);
-		</script> 
-	</p>
-	<div class="b3"></div>
-	<p onclick="LoveChange(love)"> <img alt = "HTML" src="https://w7.pngwing.com/pngs/702/302/png-transparent-red-button-push-button-red-button-miscellaneous-3d-computer-graphics-web-button.png" width= "200" height="150"> </p>
+<div class="background"> 
+	<a href = "stage.html">
+		<div class="astronaut"> <img alt = "HTML" src="./image/stand_s.png" onmouseover="this.src = './image/yeah_s.png'" onmouseout = "this.src = './image/stand_s.png'" width = "350" height = "350"> </div>
+	</a>
 </div>
 </body>
 </html>

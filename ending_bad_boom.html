@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>흐트므르IV</title>
+<script type="text/javascript">
+    //메인 화면으로 돌아감
+    function goMain(){
+
+    }
+</script>
+<style>
+    *{
+		margin: 0;
+		padding: 0;
+	}
+    div{
+        width: 1280px;
+        height: 720px;
+        text-align: center;
+    }
+    .background{ 
+        background-image: url('./image/ending/bad_boom.png');
+        background-repeat: no-repeat;
+		background-size: contain;
+		position:relative;
+    }
+    .goback{
+        width: 100px;
+        height: 100px;
+		position:static;
+        transform: translate(970px, 500px);
+	}
+</style>
+</head>
+<body>
+    <div class="background">
+        <a href="index.html">
+            <div class = "goback"> 
+                <img alt = "asdf" src = "./image/retry/off.png" onmouseover="this.src = './image/retry/on.png'" onmouseout = "this.src = './image/retry/off.png'" width = "300" height = "300">
+            </div>
+        </a>
+    </div>
+</body>
+</html>
