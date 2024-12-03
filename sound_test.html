@@ -48,13 +48,14 @@
     // 판정 라이트 틀림 / 맞음
     var red = new Image();
     red.src = "./image/red.png";
-
     var green = new Image();
     green.src = "./image/green.png";
 
-    // 안씀
-    var white = new Image();
-    white.src = "./image/white.png";
+    // 클리어 화면에 사용하는 이미지 
+    var clear_image = new Image();
+    clear_image.src = "./image/green.png"
+    var gameover_image = new Image();
+    gameover_image.src = "./image/red.png"
 
     // 누른 키 종류 판별하는 함수 
     var keycode;
@@ -198,11 +199,16 @@
         if(clear == 1){
 
             partner.src = partner_happy.src;
+            context.drawImage(black, 0, 0, 1280, 720);
+            context.drawImage(background, 0, 0, 1280, 720);
             context.drawImage(partner, 350, 22, 560, 350);
             context.drawImage(tb_good, 300, 22, 300, 300);
-            context.font = "60px Arial";
-            context.fillStyle = "green";
-            context.fillText("CLEAR", 440, 360);
+            context.drawImage(clear_image, 600, 450, 300, 300);
+
+            setTimeout(function(){
+                location.href = 'stage.html';
+            }, 1000);
+
             gameRunning = false;
         
         }
@@ -244,7 +250,6 @@
         // 요소 출력 
         context.clearRect(0, 0, canvas.width, canvas.height); // 초기화
         context.drawImage(black, 0, 0, 1280, 720);
-
         context.drawImage(background, 0, 0, 1280, 720);
         context.drawImage(partner, 350, 22, 560, 350);
 
@@ -258,7 +263,6 @@
 
         console.log("step");
         context.drawImage(tb[step + 1], 300, 22, 300, 300);
-        
         context.drawImage(button_off, 430, 450, 400, 300);
 
         bgm.play(); // 배경음
@@ -346,6 +350,10 @@
             if (heart <= 0) {
                 heart = 0;
                 gameRunning = false; // 게임 정지
+
+                setTimeout(function(){
+                    location.href = 'ending_happy.html';
+                }, 1000);
             }
             
         }
@@ -364,15 +372,15 @@
         */
         // 게임 오버 표시
         if (!gameRunning) {
+            context.drawImage(black, 0, 0, 1280, 720);
+            context.drawImage(background, 0, 0, 1280, 720);
             context.drawImage(partner, 350, 22, 560, 350);
             var x = 1180;
             for(let i = 0; i < 5; i++){
                 context.drawImage(heart_array[i], x, 30, 70, 70);
                 x = x - 60;
             }
-            context.font = "60px Arial";
-            context.fillStyle = "red";
-            context.fillText("GAME OVER", 440, 360);
+            context.drawImage(gameover_image, 600, 450, 300, 300);
         }
 
     }
