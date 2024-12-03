@@ -73,25 +73,25 @@
     var tb_good = new Image();
     tb_good.src = "./image/TB/good.png";
     var tb1 = new Image();
-    tb1.src = "./image/TB/kim/001.png";
+    tb1.src = "./image/TB/stage2/001.png";
     var tb2 = new Image();
-    tb2.src = "./image/TB/kim/002.png";
+    tb2.src = "./image/TB/stage2/002.png";
     var tb3 = new Image();
-    tb3.src = "./image/TB/kim/003.png";
+    tb3.src = "./image/TB/stage2/003.png";
     var tb4 = new Image();
-    tb4.src = "./image/TB/kim/004.png";
+    tb4.src = "./image/TB/stage2/004.png";
     var tb5 = new Image();
-    tb5.src = "./image/TB/kim/005.png";
+    tb5.src = "./image/TB/stage2/005.png";
     var tb6 = new Image();
-    tb6.src = "./image/TB/kim/006.png";
+    tb6.src = "./image/TB/stage2/006.png";
     var tb7 = new Image();
-    tb7.src = "./image/TB/kim/007.png";
+    tb7.src = "./image/TB/stage2/007.png";
     var tb8 = new Image();
-    tb8.src = "./image/TB/kim/008.png";
+    tb8.src = "./image/TB/stage2/008.png";
     var tb9 = new Image();
-    tb9.src = "./image/TB/kim/009.png";
+    tb9.src = "./image/TB/stage2/009.png";
     var tb10 = new Image();
-    tb10.src = "./image/TB/kim/010.png";
+    tb10.src = "./image/TB/stage2/010.png";
 
     var tb = [tb1, tb2, tb3, tb4, tb5, tb6, tb7, tb8, tb9, tb10];
     //배경음
@@ -109,15 +109,15 @@
     // 주인공 대사 
     var stage1 = [
         [0, 0, 0, 0, 0, 0],
-        [1, 1, 1, 1, 0, 1],
-        [1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0],
-        [1, 0, 1, 1, 0, 0, 0, 0],
-        [1, 1, 1, 1, 0, 1],
-        [0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0],
-        [1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1],
-        [1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1],
-        [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
-        [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0]
+        [0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
+        [1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0],
+        [0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0],
+        [1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 1, 0],
+        [0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1],
+        [0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0],
+        [1, 0, 0, 0, 1, 0, 1, 1, 0],
+        [1, 0, 0, 1, 1, 1, 0, 0, 1]
         ];
 
     
@@ -285,7 +285,7 @@
                 index = 0;
                 judgelight = -1;
                 heal = 1;
-                printMorseKey = setInterval(printMorse, 500);
+                printMorseKey = setInterval(printMorse, 800);
             }, 2000);
         }
 
@@ -302,7 +302,7 @@
         // 모스부호 출력 
         for(let i = 0; i < onScreen.length; i++){
             context.drawImage(onScreen[i].image, onScreen[i].x, 400, 100, 100);
-            onScreen[i].x = onScreen[i].x - 6; // 여기 6 수정하면 모스부호 오는 속도 바꿀 수 있음 
+            onScreen[i].x = onScreen[i].x - 4; // 여기 6 수정하면 모스부호 오는 속도 바꿀 수 있음 
         }
         
         context.drawImage(background, 0, 0, 1280, 720);
