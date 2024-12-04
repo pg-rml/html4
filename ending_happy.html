@@ -4,10 +4,14 @@
 <meta charset="utf-8">
 <title>흐트므르IV</title>
 <script type="text/javascript">
-    //메인 화면으로 돌아감
-    function goMain(){
+    var bgm = new Audio();
+    bgm.src = "./sound/bgm/main.mp3";
 
+    function loaded(){
+
+        bgm.play();
     }
+
 </script>
 <style>
     *{
