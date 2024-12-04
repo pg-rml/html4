@@ -7,7 +7,16 @@
 	var bgm = new Audio();
     bgm.src = "./sound/bgm/select_stage.mp3";
 
-	
+	function loaded(){
+
+        setInterval(runGame, 10);
+    }
+
+    function runGame(){
+
+        bgm.play();
+    }
+
     
 </script>
 <style>
