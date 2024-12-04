@@ -7,11 +7,17 @@
 	var bgm = new Audio();
     bgm.src = "./sound/bgm/main.mp3";
 
-	function loaded(){
+    function loaded(){
+
+        setInterval(runGame, 10);
+    }
+
+    function runGame(){
 
         bgm.play();
     }
-    
+
+
 </script>
 <style>
 	*{
